@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codenames Board</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Landing: pick a role -->
+    <section id="screen-home" class="screen visible">
+      <div class="center">
+        <h1>Codenames</h1>
+        <p class="sub">Quick table-ready board & spymaster key</p>
+        <div class="role-buttons">
+          <button id="btn-ops" class="primary">Operative (Board)</button>
+          <button id="btn-spy" class="secondary">Spymaster (Key)</button>
+        </div>
+        <p class="hint">
+          Tip: open this page on your iPad for Operatives, and on your phone for
+          Spymasters.
+        </p>
+      </div>
+    </section>
+
+    <!-- Operative screen -->
+    <section id="screen-ops" class="screen">
+      <header class="topbar">
+        <button class="back" id="backFromOps">←</button>
+        <div class="title">Operative Board</div>
+        <div class="spacer"></div>
+      </header>
+
+      <main class="board-wrap">
+        <div id="ops-board" class="board"></div>
+      </main>
+
+      <!-- Color popup -->
+      <div
+        id="ops-popup"
+        class="popup hidden"
+        role="dialog"
+        aria-label="Pick color"
+      >
+        <button class="pick i-blue" data-type="blue" aria-label="Blue"></button>
+        <button class="pick i-red" data-type="red" aria-label="Red"></button>
+        <button
+          class="pick i-gray"
+          data-type="gray"
+          aria-label="Bystander"
+        ></button>
+        <button
+          class="pick i-black"
+          data-type="black"
+          aria-label="Assassin"
+        ></button>
+        <button id="ops-clear" class="btn-clear">Reset</button>
+      </div>
+
+      <footer class="controlbar">
+        <button id="ops-undo" class="btn-amber">↩︎ Undo</button>
+        <button id="ops-reset" class="btn-danger">⟳ Reset</button>
+        <button id="ops-new" class="btn-green">✦ New Words</button>
+      </footer>
+    </section>
+
+    <!-- Spymaster screen -->
+    <section id="screen-spy" class="screen">
+      <header class="topbar">
+        <button class="back" id="backFromSpy">←</button>
+        <div class="title">Spymaster Key</div>
+        <div class="spacer"></div>
+      </header>
+
+      <main class="spy-wrap">
+        <div class="controls">
+          <label class="toggle">
+            <input type="radio" name="firstTeam" value="blue" checked />
+            <span>Blue starts (9)</span>
+          </label>
+          <label class="toggle">
+            <input type="radio" name="firstTeam" value="red" />
+            <span>Red starts (9)</span>
+          </label>
+          <button id="spy-gen" class="primary">Generate Key</button>
+          <p class="note" id="spy-note">No key yet. Tap “Generate Key”.</p>
+        </div>
+        <div id="spy-grid" class="board key-grid"></div>
+      </main>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
