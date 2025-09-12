@@ -50,7 +50,9 @@ body {
   min-height: 100svh;
 }
 .screen.visible {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .center {
@@ -287,6 +289,12 @@ h1 {
 /* Bottom controlbar */
 .controlbar {
   position: sticky;
+  border-radius: var(--tile-radius);
+  background: var(--glass);
+  border: 1px solid var(--glass-stroke);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
   bottom: 0;
   left: 0;
   right: 0;
