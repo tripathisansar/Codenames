@@ -52,7 +52,7 @@
       </div>
 
       <footer class="controlbar">
-        <button class="back" id="backFromOps">←</button>
+        <button class="back" id="backFromOps">← Back</button>
         <button id="ops-undo" class="btn-amber">↩︎ Undo</button>
         <button id="ops-reset" class="btn-danger">⟳ Reset</button>
         <button id="ops-new" class="btn-green">✦ New Words</button>
@@ -70,12 +70,18 @@
       <main class="spy-wrap">
         <div class="controls">
           <label class="toggle">
-            <input type="radio" name="firstTeam" value="blue" checked />
-            <span>Blue starts (9)</span>
+            <input
+              type="radio"
+              id="option1"
+              name="firstTeam"
+              value="blue"
+              checked
+            />
+            <span>Blue starts</span>
           </label>
           <label class="toggle">
-            <input type="radio" name="firstTeam" value="red" />
-            <span>Red starts (9)</span>
+            <input type="radio" id="option2" name="firstTeam" value="red" />
+            <span>Red starts</span>
           </label>
           <button id="spy-gen" class="primary">Generate Key</button>
           <p class="note" id="spy-note">No key yet. Tap “Generate Key”.</p>

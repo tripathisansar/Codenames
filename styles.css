@@ -110,11 +110,14 @@ h1 {
   height: 40px;
   border-radius: 10px;
   border: 1px solid var(--glass-stroke);
-  background: var(--glass);
+  background: linear-gradient(135deg, #6a6ff8, #4cc3ff);
   color: #fff;
   font-weight: 900;
   cursor: pointer;
   box-shadow: var(--shadow);
+}
+.controlbar .back {
+  background: linear-gradient(135deg, #6a6ff8, #4cc3ff);
 }
 .topbar .title {
   font-weight: 900;
@@ -396,6 +399,12 @@ h1 {
       rgba(255, 255, 255, 0.06) 0 11px,
       transparent 11px 22px
     );
+}
+input[type="radio"] {
+}
+input[type="radio"]:checked + label {
+  background: white;
+  color: black;
 }
 
 /* Responsive */
