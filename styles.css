@@ -157,6 +157,8 @@ h1 {
   cursor: pointer;
 }
 .tile .word-main {
+  position: absolute;
+  bottom: 50px;
   font-weight: 800;
   color: var(--text-strong);
   font-size: clamp(12px, 2.1vw, 20px);
@@ -165,14 +167,14 @@ h1 {
 }
 .tile .word-mirror {
   position: absolute;
-  top: 6px;
+  top: 50px;
   left: 0;
   right: 0;
   text-align: center;
   transform: rotate(180deg);
   opacity: 0.65;
   font-weight: 700;
-  font-size: clamp(9px, 1.6vw, 14px);
+  font-size: clamp(10px, 1.8vw, 16px);
 }
 .tile .back {
   position: absolute;
