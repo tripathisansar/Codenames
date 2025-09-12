@@ -433,6 +433,59 @@ input[type="radio"]:checked + label {
   font-weight: 700;
 }
 
+/* Mix & match UI */
+.pack-mixer {
+  margin-top: 6px;
+}
+.linkish {
+  background: none;
+  border: none;
+  color: #cfe3ff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 6px 0;
+}
+.mix-panel {
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid var(--glass-stroke);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+.mix-panel.hidden {
+  display: none;
+}
+
+.mix-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+.mix-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mix-actions {
+  display: flex;
+  gap: 8px;
+}
+.mix-actions .primary,
+.mix-actions .secondary {
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
 /* Responsive */
 @media (orientation: portrait) {
   .board,
