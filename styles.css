@@ -409,6 +409,30 @@ input[type="radio"]:checked + label {
   color: black;
 }
 
+.pack-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.pack-row label {
+  opacity: 0.9;
+  font-weight: 700;
+}
+.select {
+  appearance: none;
+  border: 1px solid var(--glass-stroke);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #000;
+  padding: 10px 12px;
+  border-radius: 12px;
+  min-width: 240px;
+  box-shadow: var(--shadow);
+  font-weight: 700;
+}
+
 /* Responsive */
 @media (orientation: portrait) {
   .board,

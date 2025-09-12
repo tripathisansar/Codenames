@@ -3,6 +3,7 @@ const K_WORDS = "cn.words.v1";
 const K_DECK = "cn.deck.v1";
 const K_HISTORY = "cn.history.v1";
 const K_KEY = "cn.key.v1"; // { firstTeam:'blue'|'red', key:[25 of 'blue'|'red'|'gray'|'black'] }
+const K_PACK = "cn.pack.v1"; // ✅ selected pack id or "__ALL__"
 
 // ----- Elements -----
 const screens = {
@@ -14,6 +15,9 @@ const btnOps = document.getElementById("btn-ops");
 const btnSpy = document.getElementById("btn-spy");
 const backFromOps = document.getElementById("backFromOps");
 const backFromSpy = document.getElementById("backFromSpy");
+
+// ✅ pack select element
+const packSelect = document.getElementById("packSelect");
 
 // Operative
 const opsBoard = document.getElementById("ops-board");
@@ -32,6 +36,7 @@ const firstRadios = () =>
 
 // ----- Global state (in-memory) -----
 let WORDS_ALL = []; // loaded from words.json
+let PACKS = []; // ✅ all packs from words.json
 let opsHistory = []; // indices stack for Undo
 let activeTile = null; // element
 
@@ -49,14 +54,70 @@ const ls = {
   del: (k) => localStorage.removeItem(k),
 };
 
+function getSelectedPackId() {
+  return ls.get(K_PACK, "__ALL__");
+}
+function setSelectedPackId(id) {
+  ls.set(K_PACK, id);
+}
+
+// ✅ Load packs + words for the chosen pack (or ALL)
 async function loadWords() {
-  if (WORDS_ALL.length) return WORDS_ALL;
-  const res = await fetch("words.json", { cache: "no-cache" });
-  const data = await res.json();
-  WORDS_ALL = (data?.packs?.[0]?.words || []).map((w) =>
-    String(w).trim().toUpperCase()
-  );
+  if (!PACKS.length) {
+    const res = await fetch("words.json", { cache: "no-cache" });
+    const data = await res.json();
+    PACKS = Array.isArray(data?.packs) ? data.packs : [];
+    populatePackSelect(PACKS);
+  }
+
+  const chosen = getSelectedPackId();
+  let list = [];
+  if (chosen === "__ALL__") {
+    PACKS.forEach((p) => {
+      if (Array.isArray(p.words)) list.push(...p.words);
+    });
+  } else {
+    const p = PACKS.find((p) => p.id === chosen) || PACKS[0] || { words: [] };
+    list = Array.isArray(p.words) ? p.words : [];
+  }
+
+  WORDS_ALL = list.map((w) => String(w).trim().toUpperCase());
   return WORDS_ALL;
+}
+
+// ✅ Build the dropdown options and hook change
+function populatePackSelect(packs) {
+  if (!packSelect) return;
+  packSelect.innerHTML = "";
+
+  const optAll = document.createElement("option");
+  optAll.value = "__ALL__";
+  optAll.textContent = "All Packs (merged)";
+  packSelect.appendChild(optAll);
+
+  packs.forEach((p) => {
+    const o = document.createElement("option");
+    o.value = p.id;
+    o.textContent = p.name || p.id;
+    packSelect.appendChild(o);
+  });
+
+  const saved = getSelectedPackId();
+  packSelect.value =
+    packs.some((p) => p.id === saved) || saved === "__ALL__"
+      ? saved
+      : "__ALL__";
+
+  packSelect.addEventListener("change", async () => {
+    setSelectedPackId(packSelect.value);
+    // Clear current deck/board/history to avoid mixing packs
+    ls.del(K_DECK);
+    ls.del(K_WORDS);
+    ls.del(K_HISTORY);
+    opsHistory = [];
+    // Preload words for the new pack (next click is instant)
+    await loadWords();
+  });
 }
 
 function shuffle(arr) {
@@ -71,7 +132,6 @@ function shuffle(arr) {
 function initDeckIfNeeded() {
   let deck = ls.get(K_DECK);
   if (!deck || !Array.isArray(deck) || deck.length < 25) {
-    // Build fresh deck; avoid last ~100 to reduce repeats
     const lastWords = ls.get(K_WORDS, []);
     const avoid = new Set(lastWords.slice(0, 100));
     const fresh = WORDS_ALL.filter((w) => !avoid.has(w));
@@ -319,4 +379,9 @@ backFromSpy.addEventListener("click", () => show("home"));
 // Auto-close popup on resize/rotate
 window.addEventListener("resize", cleanupPopup);
 
-// Initial load: nothing else to do
+// ✅ Initialize packs & dropdown on page load
+(async function initPacks() {
+  try {
+    await loadWords();
+  } catch {}
+})();
